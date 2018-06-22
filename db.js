@@ -30,6 +30,14 @@ function getAll() {
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
+function getPending() {
+  return db.any('select * from todos where isDone=false');
+}
+getPending()
+  .then((data) => { console.log(data); })
+  .catch((error) => { console.log(error); });
+
+
 
 module.exports = {
   getOne,

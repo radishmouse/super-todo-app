@@ -6,8 +6,7 @@ select * from todos;
 select * from todos where id=2;
 
 -- get all pending todos
-select * from todos
-where isDone=false;
+select * from todos where isDone=false;
 
 -- get all finished todos
 select * from todos
