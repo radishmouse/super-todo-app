@@ -9,17 +9,18 @@ const cn = {
 const db = pgp(cn);
 
 function getTodo(id) {
-  db.any('select * from todos where id=$1', [id])
+  db.oneOrNone('select * from todos where id=$1', [id])
       .then(function(data) {
           // success;
           console.log(data);
       })
       .catch(function(error) {
           // error;
+          console.log('this is the error that happened');
           console.log(error);
       });
 }
-// getTodo(7);
+getTodo(7777777777777);
 
 module.exports = {
   getTodo
