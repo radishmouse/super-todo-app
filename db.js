@@ -33,14 +33,15 @@ function getAll() {
 function getPending() {
   return db.any('select * from todos where isDone=false');
 }
-getPending()
-  .then((data) => { console.log(data); })
-  .catch((error) => { console.log(error); });
+// getPending()
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
 
 
 
 module.exports = {
   getOne,
-  getAll
+  getAll,
+  getPending
 };
 
