@@ -72,6 +72,15 @@ function setTitle(id, newTitle) {
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
+function add(title) {
+  return db.one("insert into todos (title, isDone) values ('$1#', false) returning id", [title]);
+}
+// add('drink some more bourbon')
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
+
+
+
 module.exports = {
   getOne,
   getAll,
@@ -80,6 +89,7 @@ module.exports = {
   searchByTitle,
   deleteById,
   setFinished,
-  setTitle
+  setTitle,
+  add
 };
 
