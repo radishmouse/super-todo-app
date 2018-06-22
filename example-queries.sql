@@ -37,3 +37,18 @@ where id=2;
 update todos
 set title='cook amazing dinner'
 where id=3;
+
+-- change title and isDone
+update todos
+set
+	title='cook the most amazing dinner evarr',
+	isDone=true
+where id=3;
+
+-- delete by id
+delete from todos
+where id=3;
+
+-- delete all finished todos
+delete from todos
+where isDone=true;
