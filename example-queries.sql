@@ -3,8 +3,7 @@
 select * from todos;
 
 -- get one todo by id
-select * from todos
-where id=2;
+select * from todos where id=2;
 
 -- get all pending todos
 select * from todos
