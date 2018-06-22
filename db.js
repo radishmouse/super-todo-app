@@ -22,7 +22,17 @@ function getOne(id) {
 //       console.log(error);
 //   });
 
+
+function getAll() {
+  return db.any('select * from todos')
+}
+// getAll()
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
+
+
 module.exports = {
-  getOne
+  getOne,
+  getAll
 };
 
