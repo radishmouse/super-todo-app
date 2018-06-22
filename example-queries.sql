@@ -44,8 +44,7 @@ set
 where id=3;
 
 -- delete by id
-delete from todos
-where id=3;
+delete from todos where id=3;
 
 -- delete all finished todos
 delete from todos

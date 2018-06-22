@@ -51,12 +51,21 @@ function searchByTitle(searchString) {
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
+function deleteById(id) {
+  return db.result('delete from todos where id=$1', [id]);
+}
+// deleteById(7)
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
+
+
 
 module.exports = {
   getOne,
   getAll,
   getPending,
   getFinished,
-  searchByTitle
+  searchByTitle,
+  deleteById
 };
 
