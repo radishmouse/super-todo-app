@@ -8,21 +8,21 @@ const cn = {
 };
 const db = pgp(cn);
 
-function getTodo(id) {
-  db.oneOrNone('select * from todos where id=$1', [id])
-      .then(function(data) {
-          // success;
-          console.log(data);
-      })
-      .catch(function(error) {
-          // error;
-          console.log('this is the error that happened');
-          console.log(error);
-      });
+function getOne(id) {
+  return db.oneOrNone('select * from todos where id=$1', [id]);
 }
-getTodo(7777777777777);
+// getOne(7)
+//   .then(function(data) {
+//       // success;
+//       console.log(data);
+//   })
+//   .catch(function(error) {
+//       // error;
+//       console.log('this is the error that happened');
+//       console.log(error);
+//   });
 
 module.exports = {
-  getTodo
+  getOne
 };
 
