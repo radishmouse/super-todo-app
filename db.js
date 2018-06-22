@@ -58,6 +58,13 @@ function deleteById(id) {
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
+function setFinished(id, isDone) {
+  return db.result('update todos set isDone=$1 where id=$2', [isDone, id]);
+}
+// setFinished(6, false)
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
+
 
 
 module.exports = {
@@ -66,6 +73,7 @@ module.exports = {
   getPending,
   getFinished,
   searchByTitle,
-  deleteById
+  deleteById,
+  setFinished
 };
 
