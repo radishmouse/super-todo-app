@@ -44,13 +44,19 @@ function getFinished() {
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
-
+function searchByTitle(searchString) {
+  return db.any("select * from todos where title ilike '%$1#%'", [searchString]);
+}
+// searchByTitle('zzzzzzzzzzzzz')
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
 
 
 module.exports = {
   getOne,
   getAll,
   getPending,
-  getFinished
+  getFinished,
+  searchByTitle
 };
 
