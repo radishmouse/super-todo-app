@@ -48,6 +48,25 @@ app.post('/new', (req, res) => {
 });
 
 
+app.get('/:id/edit', (req, res) => {
+  // show the form, but populate with
+  // the current todo
+  Todo.getOne(req.params.id)
+    .then((data) => {
+      console.log(data);
+      // res.send(data);
+      res.render('todo-edit-page', data);
+    })
+});
+
+app.post('/:id/edit', (req, res) => {
+  let newTitle = req.body.title;
+  Todo.setTitle(req.params.id, newTitle)
+    .then((data) => {
+      // res.redirect(`/${req.params.id}/edit`);
+      res.redirect(`/`);
+    });
+});
 
 app.get('/:id', (req, res) => {
   console.log('This is the /:id route');
