@@ -40,8 +40,9 @@ app.post('/new', (req, res) => {
 
   Todo.add(req.body.title)
     .then((data) => {
-      console.log(data);
-      res.send(data);
+      // console.log(data);
+      // res.send(data);
+      res.redirect(`/${data.id}`);
     })
 
 });
