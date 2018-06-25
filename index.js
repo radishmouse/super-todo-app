@@ -9,6 +9,9 @@ const expressHbs = require('express-handlebars');
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
+const static = express.static;
+app.use(static('public'));
+
 
 app.get('/', (req, res) => {
   Todo.getAll()
