@@ -29,8 +29,8 @@ app.get('/:id', (req, res) => {
   Todo.getOne(req.params.id)
     .then((data) => {
       console.log(data);
-      res.send(data);
-      // res.render('todo-detail-page', data);
+      // res.send(data);
+      res.render('todo-detail-page', data);
     })
     .catch((error) => { console.log(error); });
 });
