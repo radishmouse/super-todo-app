@@ -1,5 +1,11 @@
+const dotenv = require('dotenv');
+dotenv.config();
+
 const express = require('express');
 const app = express();
+
+const setupAuth = require('./auth');
+const ensureAuthenticated = require('./auth').ensureAuthenticated;
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,6 +21,7 @@ app.set('view engine', '.hbs');
 const static = express.static;
 app.use(static('public'));
 
+setupAuth(app);
 
 app.get('/', (req, res) => {
   Todo.getAll()
@@ -29,7 +36,7 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/new', (req, res) => {
+app.get('/new', ensureAuthenticated, (req, res) => {
   console.log('This is the /new route');
   res.render('todo-create-page');
 });
