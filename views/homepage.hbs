@@ -1,4 +1,12 @@
 
+<header>
+  {{#if isLoggedIn}}
+    <a href="/logout">Log out!!!!!</a>
+  {{else}}
+    <a href="/login">Log in</a>
+  {{/if}}
+</header>
+
 <h1>Get this stuff done:</h1>
 
 {{#each todos}}

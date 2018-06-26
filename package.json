@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon --ignore sessions index.js",
     "resetdb": "dropdb super-todo-app; createdb super-todo-app; psql -d super-todo-app -f schema.sql; psql -d super-todo-app -f dummy-data.sql",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

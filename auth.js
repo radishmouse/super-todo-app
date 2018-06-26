@@ -104,8 +104,11 @@ const setupAuth = (app) => {
 
       console.log('you just logged in');
       console.log(req.isAuthenticated());
-
-      res.redirect('/');
+      req.session.save(() => {
+        // make sure the session is saved
+        // before we send them to the homepage!
+        res.redirect('/');
+      });
     }
   );
 

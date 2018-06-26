@@ -29,7 +29,8 @@ app.get('/', (req, res) => {
       console.log(data);
       // res.send(data);
       res.render('homepage', {
-        todos: data
+        todos: data,
+        isLoggedIn: req.session.passport && req.session.passport.user
       });
      })
     .catch((error) => { console.log(error); });
@@ -41,7 +42,7 @@ app.get('/new', ensureAuthenticated, (req, res) => {
   res.render('todo-create-page');
 });
 
-app.post('/new', (req, res) => {
+app.post('/new', ensureAuthenticated, (req, res) => {
   console.log(req.body);
   // res.send('hey you submitted the form');
 
