@@ -1,5 +1,17 @@
 
 <div class="container">
   <h1>{{title}}</h1>
+  <label>
+    Done:
+    <input type="checkbox" name="finished"
+    value="yeah it is done"
+    {{#if isdone}}
+      checked
+    {{/if}}
+    >
+  </label>
+  <br><br>
+  <a href="/{{id}}/edit">Edit this todo</a>
+  <br><br>
   <a href="/">Return to list</a>
 </div>
