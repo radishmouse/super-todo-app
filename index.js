@@ -36,6 +36,22 @@ app.post('/login', (req, res) => {
   res.send('yeah, you logged in');
 });
 
+app.get('/signup', (req, res) => {
+  res.render('signup-page');
+});
+
+app.post('/signup', (req, res) => {
+  let username = req.body.username;
+  let password = req.body.password;
+  let password2 = req.body.password2;
+
+  console.log(username);
+  console.log(password);
+  console.log(password2);
+
+  res.send('yeah, you signed up');
+});
+
 
 app.get('/new', (req, res) => {
   console.log('This is the /new route');
