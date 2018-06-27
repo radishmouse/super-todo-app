@@ -134,7 +134,7 @@ app.post('/new', (req, res) => {
   console.log(req.body);
   // res.send('hey you submitted the form');
 
-  Todo.add(req.body.title)
+  Todo.add(req.session.user, req.body.title)
     .then((data) => {
       // console.log(data);
       // res.send(data);
@@ -147,7 +147,7 @@ app.post('/new', (req, res) => {
 app.get('/:id/edit', (req, res) => {
   // show the form, but populate with
   // the current todo
-  Todo.getOne(req.params.id)
+  Todo.getOne(req.session.user, req.params.id)
     .then((data) => {
       console.log(data);
       // res.send(data);
@@ -162,10 +162,10 @@ app.post('/:id/edit', (req, res) => {
     isDone = true;
   }
 
-  Todo.setTitle(req.params.id, newTitle)
+  Todo.setTitle(req.session.user, req.params.id, newTitle)
     .then((data) => {
 
-      Todo.setFinished(req.params.id, isDone)
+      Todo.setFinished(req.session.user, req.params.id, isDone)
         .then((data) => {
           // res.redirect(`/${req.params.id}/edit`);
           res.redirect(`/`);
@@ -175,7 +175,7 @@ app.post('/:id/edit', (req, res) => {
 
 app.get('/:id', (req, res) => {
   console.log('This is the /:id route');
-  Todo.getOne(req.params.id)
+  Todo.getOne(req.session.user, req.params.id)
     .then((data) => {
       console.log(data);
       // res.send(data);
