@@ -116,14 +116,20 @@ function authenticateUser(username, password) {
 
 
 module.exports = {
-  getOne,
-  getAll,
-  getPending,
-  getFinished,
-  searchByTitle,
-  deleteById,
-  setFinished,
-  setTitle,
-  add
+  Todo: {
+    getOne,
+    getAll,
+    getPending,
+    getFinished,
+    searchByTitle,
+    deleteById,
+    setFinished,
+    setTitle,
+    add,
+  },
+  User: {
+    createUser,
+    authenticateUser
+  }
 };
 

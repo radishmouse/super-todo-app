@@ -4,7 +4,8 @@ const app = express();
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const Todo = require('./db');
+const Todo = require('./db').Todo;
+const User = require('./db').User;
 
 
 const expressHbs = require('express-handlebars');
