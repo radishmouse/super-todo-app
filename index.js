@@ -46,11 +46,30 @@ app.post('/signup', (req, res) => {
   let password = req.body.password;
   let password2 = req.body.password2;
 
-  console.log(username);
-  console.log(password);
-  console.log(password2);
+  // console.log(username);
+  // console.log(password);
+  // console.log(password2);
+  User.getUser(username)
+    .then(user => {
+      if (user) {
+        console.log('found that user');
+        res.send('that punk already exists');
+      } else if (password === password2) {
+        User.createUser(username, password)
+          .then(u => {
+            res.send(`Your user id is ${u.id}`);
+          })
+          .catch(err => {
+            res.send(err);
+          })
+      } else {
+        res.send('no matchy your passwordy');
+      }
+    })
 
-  res.send('yeah, you signed up');
+
+
+  // res.send('yeah, you signed up');
 });
 
 

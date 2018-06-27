@@ -128,6 +128,7 @@ module.exports = {
     add,
   },
   User: {
+    getUser,
     createUser,
     authenticateUser
   }
