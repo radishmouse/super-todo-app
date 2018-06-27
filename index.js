@@ -73,11 +73,11 @@ app.post('/login', (req, res) => {
     .then(isValid => {
       if (isValid) {
         User.getUser(username)
-        .then(u => {
-          req.session.user = u.id;
-          console.log(`Your user id is ${u.id}`);
-          res.redirect('/');
-        })
+          .then(u => {
+            req.session.user = u.id;
+            console.log(`Your user id is ${u.id}`);
+            res.redirect('/');
+          })
       } else {
         console.log('your credentials no good!');
         res.redirect('/login');
