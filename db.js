@@ -8,6 +8,8 @@ const cn = {
 };
 const db = pgp(cn);
 
+const bcrypt = require('bcrypt');
+
 function getOne(userId, id) {
   return db.oneOrNone('select * from todos where id=$1 and user_id=$2', [id, userId]);
 }
@@ -82,6 +84,36 @@ function add(userId, title) {
 // add(1, 'drank some more bourbon')
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
+
+// =====
+
+function createUser(username, password) {
+  let hash = bcrypt.hashSync(password, 10);
+  return db.one("insert into users (username, password_hash) values ('$1#', '$2#') returning id", [username, hash]);
+}
+// createUser('milla', 'mow')
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
+
+function getUser(username) {
+  return db.oneOrNone("select * from users where username='$1#'", [username]);
+}
+// getUser('milla')
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
+
+function authenticateUser(username, password) {
+  return getUser(username)
+          .then((user) => {
+            return bcrypt.compareSync(password, user.password_hash)
+          })
+          .catch((error) => false);
+
+}
+// authenticateUser('milla', 'mow')
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
+
 
 module.exports = {
   getOne,

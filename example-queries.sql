@@ -39,3 +39,10 @@ delete from todos where id=3 and user_id=1;
 
 -- delete all finished todos
 delete from todos where isDone=true and user_id=1;
+
+
+-- create a user
+insert into users
+  (username, password_hash)
+values
+  ('chris', '$2b$10$MK.V/ga3hEIrSbH06Lx5A.z0omFUPXAX1.KTZG6n2j5gnzadvDi4O');
