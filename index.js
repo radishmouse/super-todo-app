@@ -28,6 +28,14 @@ app.get('/', (req, res) => {
     .catch((error) => { console.log(error); });
 });
 
+app.get('/login', (req, res) => {
+  res.render('login-page');
+});
+
+app.post('/login', (req, res) => {
+  res.send('yeah, you logged in');
+});
+
 
 app.get('/new', (req, res) => {
   console.log('This is the /new route');
