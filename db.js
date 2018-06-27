@@ -8,10 +8,10 @@ const cn = {
 };
 const db = pgp(cn);
 
-function getOne(id) {
-  return db.oneOrNone('select * from todos where id=$1', [id]);
+function getOne(userId, id) {
+  return db.oneOrNone('select * from todos where id=$1 and user_id=$2', [id, userId]);
 }
-// getOne(7)
+// getOne(1, 3)
 //   .then(function(data) {
 //       // success;
 //       console.log(data);
@@ -23,63 +23,65 @@ function getOne(id) {
 //   });
 
 
-function getAll() {
-  return db.any('select * from todos')
+function getAll(userId) {
+  return db.any('select * from todos where user_id=$1', [userId])
 }
-// getAll()
+// getAll(1)
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
-function getPending() {
-  return db.any('select * from todos where isDone=false');
+function getPending(userId) {
+  return db.any('select * from todos where isDone=false and user_id=$1', [userId]);
 }
-// getPending()
+// getPending(1)
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
-function getFinished() {
-  return db.any('select * from todos where isDone=true');
+function getFinished(userId) {
+  return db.any('select * from todos where isDone=true and user_id=$1', [userId]);
 }
-// getFinished()
+// getFinished(1)
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
-function searchByTitle(searchString) {
-  return db.any("select * from todos where title ilike '%$1#%'", [searchString]);
+function searchByTitle(userId, searchString) {
+  return db.any("select * from todos where title ilike '%$1#%' and user_id=$2", [searchString, userId]);
 }
-// searchByTitle('zzzzzzzzzzzzz')
+// searchByTitle(1, 'cook')
+//   .then((data) => { console.log(data); })
+//   .catch((error) => { console.log(error); });
+// searchByTitle(1, 'zzzzzzzzzzzzz')
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
-function deleteById(id) {
-  return db.result('delete from todos where id=$1', [id]);
+function deleteById(userId, id) {
+  return db.result('delete from todos where id=$1 and user_id=$2', [id, userId]);
 }
-// deleteById(7)
+// deleteById(1, 3)
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
-function setFinished(id, isDone) {
-  return db.result('update todos set isDone=$1 where id=$2', [isDone, id]);
+function setFinished(userId, id, isDone) {
+  return db.result('update todos set isDone=$1 where id=$2 and user_id=$3', [isDone, id, userId]);
 }
-// setFinished(6, false)
+// setFinished(1, 2, false)
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
-function setTitle(id, newTitle) {
-  return db.result("update todos set title='$1#' where id=$2", [newTitle, id]);
+function setTitle(userId, id, newTitle) {
+  return db.result("update todos set title='$1#' where id=$2 and user_id=$3", [newTitle, id, userId]);
 }
-// setTitle(6, 'drink some bourbon')
+// setTitle(1, 1, 'drink some bourbon')
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
-function add(title) {
-  return db.one("insert into todos (title, isDone) values ('$1#', false) returning id", [title]);
+function add(userId, title) {
+  console.log('adding...');
+  return db.one("insert into todos (title, isDone, user_id) values ('$1#', false, $2) returning id", [title, userId]);
 }
-// add('drink some more bourbon')
+// add(1, 'drank some more bourbon')
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
-
-
 
 module.exports = {
   getOne,
