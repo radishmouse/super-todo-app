@@ -7,6 +7,22 @@ app.use(bodyParser.urlencoded({ extended: false }));
 const Todo = require('./db').Todo;
 const User = require('./db').User;
 
+// cookie-parser lets us access cookies in the browser
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
+// And now, set up sessions so we can track a logged-in user
+const session = require('express-session');
+app.use(session({
+  key: 'user_sid',
+  secret: 'ldfhgosdhgoushdfglahdflajsd',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+      expires: 600000
+  }
+}));
+
 
 const expressHbs = require('express-handlebars');
 
@@ -16,9 +32,26 @@ app.set('view engine', '.hbs');
 const static = express.static;
 app.use(static('public'));
 
+// This is middleware that will clear the cookie for stale user sessions
+app.use((req, res, next) => {
+  if (req.cookies.user_sid && !req.session.user) {
+      res.clearCookie('user_sid');
+  }
+  next();
+});
 
-app.get('/', (req, res) => {
-  Todo.getAll()
+// helper middleware function to check for logged-in users
+var ensureLoggedIn = (req, res, next) => {
+  if (req.session.user && req.cookies.user_sid) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+};
+
+
+app.get('/', ensureLoggedIn, (req, res) => {
+  Todo.getAll(req.session.user)
     .then((data) => {
       console.log(data);
       // res.send(data);
@@ -34,7 +67,23 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  res.send('yeah, you logged in');
+  let username = req.body.username;
+  let password = req.body.password;
+  User.authenticateUser(username, password)
+    .then(isValid => {
+      if (isValid) {
+        User.getUser(username)
+        .then(u => {
+          req.session.user = u.id;
+          console.log(`Your user id is ${u.id}`);
+          res.redirect('/');
+        })
+      } else {
+        console.log('your credentials no good!');
+        res.redirect('/login');
+      }
+    })
+  // res.send('yeah, you logged in');
 });
 
 app.get('/signup', (req, res) => {
@@ -57,7 +106,10 @@ app.post('/signup', (req, res) => {
       } else if (password === password2) {
         User.createUser(username, password)
           .then(u => {
-            res.send(`Your user id is ${u.id}`);
+            req.session.user = u.id;
+            console.log(`Your user id is ${u.id}`);
+            res.redirect('/');
+            // res.send(`Your user id is ${u.id}`);
           })
           .catch(err => {
             res.send(err);
