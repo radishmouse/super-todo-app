@@ -4,9 +4,7 @@
 {{#each todos}}
   {{!-- This is a single todo --}}
   <p>
-    <a href="/{{id}}">
-      {{title}}:
-    </a>
-    {{isdone}}
+    <a href="/{{id}}">{{title}}</a>
+    [Done? {{isdone}}]
   </p>
 {{/each}}
