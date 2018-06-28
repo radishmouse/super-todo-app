@@ -155,6 +155,18 @@ app.get('/:id/edit', (req, res) => {
     })
 });
 
+app.post('/:id/toggle', (req, res) => {
+  let isDone = false;
+  if (req.body.finished) {
+    isDone = true;
+  }
+  Todo.setFinished(req.session.user, req.params.id, isDone)
+  .then((data) => {
+    res.redirect(`/`);
+  })
+
+});
+
 app.post('/:id/edit', (req, res) => {
   let newTitle = req.body.title;
   let isDone = false;

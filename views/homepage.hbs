@@ -4,7 +4,24 @@
 {{#each todos}}
   {{!-- This is a single todo --}}
   <p>
-    <a href="/{{id}}">{{title}}</a>
-    [Done? {{isdone}}]
+    <form action="/{{id}}/toggle" method="POST">
+      <input type="checkbox" name="finished"
+      value="yeah it is done"
+      {{#if isdone}}
+        checked
+      {{/if}}
+      >
+      <a href="/{{id}}">{{title}}</a>
+    </form>
   </p>
 {{/each}}
+
+<script>
+  let forms = document.querySelectorAll('form');
+  forms.forEach((form) => {
+    form.querySelector('[type="checkbox"]')
+      .addEventListener('click', (e) => {
+        form.submit();
+      });
+  });
+</script>

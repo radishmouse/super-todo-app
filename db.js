@@ -26,28 +26,28 @@ function getOne(userId, id) {
 
 
 function getAll(userId) {
-  return db.any('select * from todos where user_id=$1', [userId])
+  return db.any('select * from todos where user_id=$1 order by id', [userId])
 }
 // getAll(1)
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
 function getPending(userId) {
-  return db.any('select * from todos where isDone=false and user_id=$1', [userId]);
+  return db.any('select * from todos where isDone=false and user_id=$1 order by id', [userId]);
 }
 // getPending(1)
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
 function getFinished(userId) {
-  return db.any('select * from todos where isDone=true and user_id=$1', [userId]);
+  return db.any('select * from todos where isDone=true and user_id=$1 order by id', [userId]);
 }
 // getFinished(1)
 //   .then((data) => { console.log(data); })
 //   .catch((error) => { console.log(error); });
 
 function searchByTitle(userId, searchString) {
-  return db.any("select * from todos where title ilike '%$1#%' and user_id=$2", [searchString, userId]);
+  return db.any("select * from todos where title ilike '%$1#%' and user_id=$2 order by id", [searchString, userId]);
 }
 // searchByTitle(1, 'cook')
 //   .then((data) => { console.log(data); })
